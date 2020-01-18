@@ -2,6 +2,9 @@
 os: osx
 osx_image: xcode8
 
+env:
+  R_VERSION: 3.6.1
+
 before_install:
   - curl -o clang.pkg https://cloud.r-project.org/bin/macosx/tools/clang-7.0.0.pkg
   - sudo installer -pkg clang.pkg -target /
@@ -22,7 +25,7 @@ before_install:
   - curl https://mac.r-project.org/libs/libiomp-20131213-darwin10.tar.gz | tar xz
   - sudo ditto usr/local /usr/local
 #   - sudo rm -rf /Library/Frameworks/R.framework
-  - curl -o R.pkg https://cloud.r-project.org/bin/macosx/R-3.6.1.pkg
+  - curl -o R.pkg https://cloud.r-project.org/bin/macosx/R-$R_VERSION.pkg
   - sudo installer -pkg R.pkg -target /
   - cp /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libc++.1.dylib .
   - cp /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libc++abi.1.dylib .
