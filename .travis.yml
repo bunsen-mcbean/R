@@ -41,8 +41,8 @@ script:
   - cat tmp >configure
   - rm tmp
   
-  - xcodebuild -version -sdk macosx10.11 Path
-  - export SDK=`xcodebuild -version -sdk macosx10.11 Path`
+  - xcodebuild -version -sdk macosx10.12 Path
+  - export SDK=`xcodebuild -version -sdk macosx10.12 Path`
 
  # - ./configure 'CC=clang' 'CXX=clang++' 'OBJC=clang' 'CFLAGS=-Wall -g -O2' 'CPPFLAGS=-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -I/usr/local/include' 'CXXFLAGS=-Wall -g -O2' 'OBJCFLAGS=-Wall -g -O2' 'FCFLAGS=-Wall -g -O2' 'F77FLAGS=-Wall -g -O2' --enable-R-framework --enable-R-shlib --with-aqua=no --with-tcltk=no --with-x=no --with-cairo=yes --with-libpng=yes --with-jpeglib=yes --with-libtiff=yes || true
  # - cat config.log
