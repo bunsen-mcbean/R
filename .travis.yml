@@ -5,7 +5,7 @@ osx_image: xcode8
 env:
   R_VERSION: 3.6.1
 
-before_install:
+install:
   - curl -o clang.pkg https://cloud.r-project.org/bin/macosx/tools/clang-7.0.0.pkg
   - sudo installer -pkg clang.pkg -target /
   - curl -o gfortran.pkg https://cloud.r-project.org/bin/macosx/tools/gfortran-6.1.pkg
@@ -24,6 +24,7 @@ before_install:
   - curl https://mac.r-project.org/libs/readline-5.2-12-darwin8-bin4.tar.gz | tar xz
   - curl https://mac.r-project.org/libs/libiomp-20131213-darwin10.tar.gz | tar xz
   - sudo chown -R $(whoami) /usr/local
+  - sudo mkdir -p /usr/local/include
   - sudo ditto usr/local /usr/local
 #   - sudo rm -rf /Library/Frameworks/R.framework
   - curl -o R.pkg https://cloud.r-project.org/bin/macosx/R-$R_VERSION.pkg
