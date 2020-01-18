@@ -21,7 +21,7 @@ install:
   - curl https://mac.r-project.org/libs/fontconfig-2.11.1-darwin.13-x86_64.tar.gz | sudo tar xzk -C / || true
   - curl https://mac.r-project.org/libs/freetype-2.5.5-darwin.13-x86_64.tar.gz | sudo tar xzk -C / || true
   - curl https://mac.r-project.org/libs/cairo-1.14.2-darwin.13-x86_64.tar.gz | sudo tar xzk -C / || true
-  - brew install libxml2
+#  - brew install libxml2
   - pkg-config --exists cairo --print-errors
 #   - curl https://mac.r-project.org/libs/libpng-1.6.28-darwin.15-x86_64.tar.gz | sudo tar xzk -C /
 #   - curl https://mac.r-project.org/libs/jpeg-9-darwin.15-x86_64.tar.gz | sudo tar xzk -C /
@@ -45,7 +45,7 @@ script:
   - cat tmp >configure
   - rm tmp
 
-  - ./configure 'CC=clang' 'CXX=clang++' 'OBJC=clang' 'CFLAGS=-Wall -g -O2' 'CPPFLAGS=-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk -I/usr/local/include' 'CXXFLAGS=-Wall -g -O2' 'OBJCFLAGS=-Wall -g -O2' 'FCFLAGS=-Wall -g -O2' 'F77FLAGS=-Wall -g -O2' 'PKG_CONFIG_PATH=/usr/lib/pkgconfig:/opt/X11/lib/pkgconfig:/usr/local/lib/pkgconfig' --enable-R-framework --enable-R-shlib --with-aqua=no --with-tcltk=no --with-x=no --with-cairo=yes --with-libpng=yes --with-jpeglib=yes --with-libtiff=yes || true
+  - ./configure 'CC=clang' 'CXX=clang++' 'OBJC=clang' 'CFLAGS=-Wall -g -O2' 'CPPFLAGS=-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk -I/usr/local/include' 'CXXFLAGS=-Wall -g -O2' 'OBJCFLAGS=-Wall -g -O2' 'FCFLAGS=-Wall -g -O2' 'F77FLAGS=-Wall -g -O2' 'PKG_CONFIG_PATH=/usr/lib/pkgconfig:/opt/local/lib/pkgconfig:/usr/local/lib/pkgconfig' --enable-R-framework --enable-R-shlib --with-aqua=no --with-tcltk=no --with-x=no --with-cairo=yes --with-libpng=yes --with-jpeglib=yes --with-libtiff=yes || true
   - cat config.log
   
   
