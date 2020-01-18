@@ -13,19 +13,17 @@ install:
   - curl -o XQuartz.pkg https://www.jamovi.org/misc/XQuartz.pkg
   - sudo installer -package XQuartz.pkg -target /
   - curl https://cloud.r-project.org/src/base/R-3/R-$R_VERSION.tar.gz | tar xz
-  - curl https://mac.r-project.org/libs/pcre-8.40-darwin.15-x86_64.tar.gz | sudo tar xz -C /
-  - curl https://mac.r-project.org/libs/pixman-0.32.6-darwin.13-x86_64.tar.gz | sudo tar xz -C /
-  - curl https://mac.r-project.org/libs/fontconfig-2.11.1-darwin.13-x86_64.tar.gz | sudo tar xz -C /
-  - curl https://mac.r-project.org/libs/freetype-2.5.5-darwin.13-x86_64.tar.gz | sudo tar xz -C /
-  - curl https://mac.r-project.org/libs/cairo-1.14.2-darwin.13-x86_64.tar.gz | sudo tar xz -C /
-  - curl https://mac.r-project.org/libs/libpng-1.6.28-darwin.15-x86_64.tar.gz | sudo tar xz -C /
-  - curl https://mac.r-project.org/libs/jpeg-9-darwin.15-x86_64.tar.gz | sudo tar xz -C /
-  - curl https://mac.r-project.org/libs/tiff-4.0.7-darwin.15-x86_64.tar.gz | sudo tar xz -C /
-  - curl https://mac.r-project.org/libs/readline-5.2-12-darwin8-bin4.tar.gz | sudo tar xz -C /
-  - curl https://mac.r-project.org/libs/libiomp-20131213-darwin10.tar.gz | sudo tar xz -C /
-  - sudo chown -R $(whoami) /usr/local
-  - sudo mkdir -p /usr/local/include/libpng16
-  - sudo ditto usr/local /usr/local
+  - curl https://mac.r-project.org/libs/pcre-8.40-darwin.15-x86_64.tar.gz | sudo tar xzk -C /
+  - curl https://mac.r-project.org/libs/pixman-0.32.6-darwin.13-x86_64.tar.gz | sudo tar xzk -C /
+  - curl https://mac.r-project.org/libs/fontconfig-2.11.1-darwin.13-x86_64.tar.gz | sudo tar xzk -C /
+  - curl https://mac.r-project.org/libs/freetype-2.5.5-darwin.13-x86_64.tar.gz | sudo tar xzk -C /
+  - curl https://mac.r-project.org/libs/cairo-1.14.2-darwin.13-x86_64.tar.gz | sudo tar xzk -C /
+  - curl https://mac.r-project.org/libs/libpng-1.6.28-darwin.15-x86_64.tar.gz | sudo tar xzk -C /
+  - curl https://mac.r-project.org/libs/jpeg-9-darwin.15-x86_64.tar.gz | sudo tar xzk -C /
+  - curl https://mac.r-project.org/libs/tiff-4.0.7-darwin.15-x86_64.tar.gz | sudo tar xzk -C /
+  - curl https://mac.r-project.org/libs/readline-5.2-12-darwin8-bin4.tar.gz | sudo tar xzk -C /
+  - curl https://mac.r-project.org/libs/libiomp-20131213-darwin10.tar.gz | sudo tar xzk -C /
+#   - sudo ditto usr/local /usr/local
 #   - sudo rm -rf /Library/Frameworks/R.framework
   - curl -o R.pkg https://cloud.r-project.org/bin/macosx/R-$R_VERSION.pkg
   - sudo installer -pkg R.pkg -target /
