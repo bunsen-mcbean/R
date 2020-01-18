@@ -21,6 +21,7 @@ install:
   - curl https://mac.r-project.org/libs/fontconfig-2.11.1-darwin.13-x86_64.tar.gz | sudo tar xzk -C || true /
   - curl https://mac.r-project.org/libs/freetype-2.5.5-darwin.13-x86_64.tar.gz | sudo tar xzk -C || true /
   - curl https://mac.r-project.org/libs/cairo-1.14.2-darwin.13-x86_64.tar.gz | sudo tar xzk -C || true /
+  - pkg-config --exists cairo --print-errors
 #   - curl https://mac.r-project.org/libs/libpng-1.6.28-darwin.15-x86_64.tar.gz | sudo tar xzk -C /
 #   - curl https://mac.r-project.org/libs/jpeg-9-darwin.15-x86_64.tar.gz | sudo tar xzk -C /
 #   - curl https://mac.r-project.org/libs/tiff-4.0.7-darwin.15-x86_64.tar.gz | sudo tar xzk -C /
