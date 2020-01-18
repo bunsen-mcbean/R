@@ -23,6 +23,7 @@ before_install:
   - curl https://mac.r-project.org/libs/tiff-4.0.7-darwin.15-x86_64.tar.gz | tar xz
   - curl https://mac.r-project.org/libs/readline-5.2-12-darwin8-bin4.tar.gz | tar xz
   - curl https://mac.r-project.org/libs/libiomp-20131213-darwin10.tar.gz | tar xz
+  - sudo chown -R $(whoami) /usr/local
   - sudo ditto usr/local /usr/local
 #   - sudo rm -rf /Library/Frameworks/R.framework
   - curl -o R.pkg https://cloud.r-project.org/bin/macosx/R-$R_VERSION.pkg
