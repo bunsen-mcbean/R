@@ -24,7 +24,7 @@ install:
   - curl https://mac.r-project.org/libs/readline-5.2-12-darwin8-bin4.tar.gz | tar xz
   - curl https://mac.r-project.org/libs/libiomp-20131213-darwin10.tar.gz | tar xz
   - sudo chown -R $(whoami) /usr/local
-  - sudo mkdir -p /usr/local/include
+  - sudo mkdir -p /usr/local/include/libpng16
   - sudo ditto usr/local /usr/local
 #   - sudo rm -rf /Library/Frameworks/R.framework
   - curl -o R.pkg https://cloud.r-project.org/bin/macosx/R-$R_VERSION.pkg
