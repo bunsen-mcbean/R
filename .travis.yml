@@ -22,10 +22,10 @@ install:
   - curl https://mac.r-project.org/libs/freetype-2.5.5-darwin.13-x86_64.tar.gz | sudo tar xzk -C / || true
   - curl https://mac.r-project.org/libs/cairo-1.14.2-darwin.13-x86_64.tar.gz | sudo tar xzk -C / || true
 #  - brew install libxml2
-  - sudo /usr/libexec/locate.updatedb
-  - locate libxml-2.0.pc
-  - export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/Cellar/libxml2/2.9.4/lib/pkgconfig
-  - pkg-config --exists cairo --print-errors
+#  - sudo /usr/libexec/locate.updatedb
+#  - locate libxml-2.0.pc
+#  - export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/Cellar/libxml2/2.9.4/lib/pkgconfig
+#  - pkg-config --exists cairo --print-errors
 #   - curl https://mac.r-project.org/libs/libpng-1.6.28-darwin.15-x86_64.tar.gz | sudo tar xzk -C /
 #   - curl https://mac.r-project.org/libs/jpeg-9-darwin.15-x86_64.tar.gz | sudo tar xzk -C /
 #   - curl https://mac.r-project.org/libs/tiff-4.0.7-darwin.15-x86_64.tar.gz | sudo tar xzk -C /
@@ -84,11 +84,12 @@ script:
   
 deploy:
   - provider: s3
+    bucket: jamovi-library
+    region: us-east-1
     access_key_id:
       secure: "IaAionaTUStZ9cH5eGUBGr6VE8U1TDzkD8/BP1Vh+B4gOhXmKHkm1L5EDO/icQEsLsX+oZXokMA7eSoP5VocQzO41jIRmMHPu6Mmj38DO9UTGY5LyN2arSLjjk1aOH48vvEZQ51IeaOwqARJmpGSjFCQsgCjW5Ae8imZUaPqtmO60i84iDl/aRdlaDnUkDcpn+YqZKjbzz8Dn+4JfUOkBwfINKgJO5q6jkEZeXkRz+jISVvYxME7G3pFtkjaLhb0TtFkU9D+eCZhDu0vq/+yIfnDI84kpUIZVfDutKlsORVjeHY+TSpvsYWOXqNbrSYy9qMrB0LSXpYjFHN9d3r2jKExMhG22YbtM50r1ZewYTZ0s2bkJZVNLw7TRks39/LSQeVTKXgEgIPsz7OWBbK3PRewF8BWu+la3JZsDOIDyjDACbru4aiIlmpjIfaurscTKaj5E87s8zBJFGGRpVBjxzqoI0xng207KCZ8PbCeBGQsHmZS+KG9C1VIplTevs4iVOcqgthe8P4+jwNj18DDQ+DUfN8ZvTMBF+2/txbDrL1lgnM87A5IRSk1NwxnwH+VbGztU/tnGYWivvf6vI47mQS+JN3zdXvfSPWAoSn5bXJ9kiNdK7F3hVKmHxnwQH08KECwm/NlAhTu3/Py+I+QpK5znJkKppj8V/EqioKhC+c="
     secret_access_key:
-      secure: "mGQp8vP7cVDXMt7f5tuYl/FB3FCFGZav1CWI8XkG7fYic0SJWZyFdnXNyWvvFOrr/haTn5XtSM454TAvmTQehL5aXV/bKc36j1ZK5xG3xPVOTxwsVssLQ07BXCZYdAIrQ4/l7S1fWW/bdODhq7IYVa1Dew9bHatijUpDuNHe8BgWExNJ0NhKOIVBIXJPRbxv8WpPWUb0oq3ZXjmUUxjx2Ohi6GwFktuqtLx75Cevkh+pUQoHJ9kMPWHdieJOkWJdmPVemzi9j49jwccrFEKAnBkrujdRuAVvpodwQth8wt/GbUVuTwbUQt1+A7VeN8Fvn/246nWNoHfnZLQkO91djAwuTjW2sludbBZfRG+CI2SV9a5NzCzLQtKA7RzjkZDQiw8JrBcokRmL6BPjUxC6YPmKuPxBnhJyENUPRcUGjMRIADSO7jEQ5vqO0gcKSXtvu0yv/I7zMao9wq23hIuR+sBytg7hpsSl2EFkqP7sZkK9G/znfci5Ow0aID9+xZQgxqPPBEA0gHnpDDveh/XwKnnGTZRINKbZPFWJoY8TRKlDDOkFlVoncX03ONMLDEGA8KOfT7Dmgl8HGmujF58qQMUUxBvxSIBMg7LDIAEa2mQUWXE8sFoHwvgqrooBWI4WVtwonzZJSi/xSjFiD+K24lYkKqgCTfOmJlx2bqz60CM="
-    bucket: "S3 Bucket"
+      secure: "mGQp8vP7cVDXMt7f5tuYl/FB3FCFGZav1CWI8XkG7fYic0SJWZyFdnXNyWvvFOrr/haTn5XtSM454TAvmTQehL5aXV/bKc36j1ZK5xG3xPVOTxwsVssLQ07BXCZYdAIrQ4/l7S1fWW/bdODhq7IYVa1Dew9bHatijUpDuNHe8BgWExNJ0NhKOIVBIXJPRbxv8WpPWUb0oq3ZXjmUUxjx2Ohi6GwFktuqtLx75Cevkh+pUQoHJ9kMPWHdieJOkWJdmPVemzi9j49jwccrFEKAnBkrujdRuAVvpodwQth8wt/GbUVuTwbUQt1+A7VeN8Fvn/246nWNoHfnZLQkO91djAwuTjW2sludbBZfRG+CI2SV9a5NzCzLQtKA7RzjkZDQiw8JrBcokRmL6BPjUxC6YPmKuPxBnhJyENUPRcUGjMRIADSO7jEQ5vqO0gcKSXtvu0yv/I7zMao9wq23hIuR+sBytg7hpsSl2EFkqP7sZkK9G/znfci5Ow0aID9+xZQgxqPPBEA0gHnpDDveh/XwKnnGTZRINKbZPFWJoY8TRKlDDOkFlVoncX03ONMLDEGA8KOfT7Dmgl8HGmujF58qQMUUxBvxSIBMg7LDIAEa2mQUWXE8sFoHwvgqrooBWI4WVtwonzZJSi/xSjFiD+K24lYkKqgCTfOmJlx2bqz60CM=" 
     skip_cleanup: true
     glob: R.framework.tar.bz2
     upload-dir: travis-builds
