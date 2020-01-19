@@ -79,8 +79,9 @@ script:
   - cat tmp >R.framework/Versions/Current/Resources/bin/R
   - rm tmp
   
-  - tar -cjf R.framework.tar.bz2  R.framework
-  - tar -cjf base.tar.bz2         base
+  - mkdir -p artifacts
+  - tar -cjf artifacts/R.framework.tar.bz2  R.framework
+  - tar -cjf artifacts/base.tar.bz2         base
   
 deploy:
   - provider: s3
@@ -91,7 +92,7 @@ deploy:
     secret_access_key:
       secure: "mGQp8vP7cVDXMt7f5tuYl/FB3FCFGZav1CWI8XkG7fYic0SJWZyFdnXNyWvvFOrr/haTn5XtSM454TAvmTQehL5aXV/bKc36j1ZK5xG3xPVOTxwsVssLQ07BXCZYdAIrQ4/l7S1fWW/bdODhq7IYVa1Dew9bHatijUpDuNHe8BgWExNJ0NhKOIVBIXJPRbxv8WpPWUb0oq3ZXjmUUxjx2Ohi6GwFktuqtLx75Cevkh+pUQoHJ9kMPWHdieJOkWJdmPVemzi9j49jwccrFEKAnBkrujdRuAVvpodwQth8wt/GbUVuTwbUQt1+A7VeN8Fvn/246nWNoHfnZLQkO91djAwuTjW2sludbBZfRG+CI2SV9a5NzCzLQtKA7RzjkZDQiw8JrBcokRmL6BPjUxC6YPmKuPxBnhJyENUPRcUGjMRIADSO7jEQ5vqO0gcKSXtvu0yv/I7zMao9wq23hIuR+sBytg7hpsSl2EFkqP7sZkK9G/znfci5Ow0aID9+xZQgxqPPBEA0gHnpDDveh/XwKnnGTZRINKbZPFWJoY8TRKlDDOkFlVoncX03ONMLDEGA8KOfT7Dmgl8HGmujF58qQMUUxBvxSIBMg7LDIAEa2mQUWXE8sFoHwvgqrooBWI4WVtwonzZJSi/xSjFiD+K24lYkKqgCTfOmJlx2bqz60CM=" 
     skip_cleanup: true
-    glob: R.framework.tar.bz2
     upload-dir: travis-builds
+    local_dir: artifacts
   
   
