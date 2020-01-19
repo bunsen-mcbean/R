@@ -34,12 +34,12 @@ install:
 #   - curl https://mac.r-project.org/libs/libiomp-20131213-darwin10.tar.gz | sudo tar xzk -C /
 #   - sudo ditto usr/local /usr/local
 #   - sudo rm -rf /Library/Frameworks/R.framework
-#   - curl -o R.pkg https://cloud.r-project.org/bin/macosx/R-$R_VERSION.pkg
-#   - sudo installer -pkg R.pkg -target /
-#   - cp /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libc++.1.dylib .
-#   - cp /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libc++abi.1.dylib .
-#   - cp /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libomp.dylib .
-#   - sudo rm -rf /Library/Frameworks/R.framework
+   - curl -o R.pkg https://cloud.r-project.org/bin/macosx/R-$R_VERSION.pkg
+   - sudo installer -pkg R.pkg -target /
+   - cp /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libc++.1.dylib .
+   - cp /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libc++abi.1.dylib .
+   - cp /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libomp.dylib .
+   - sudo rm -rf /Library/Frameworks/R.framework
 
 script:
 
@@ -57,9 +57,10 @@ script:
   - cd ..
   
   - ditto /Library/Frameworks/R.framework R.framework
-#  - cp libc++.1.dylib    R.framework/Versions/3.6/Resources/lib
-#  - cp libc++abi.1.dylib R.framework/Versions/3.6/Resources/lib
-#  - cp libomp.dylib      R.framework/Versions/3.6/Resources/lib
+  - cp libc++.1.dylib    R.framework/Versions/3.6/Resources/lib
+  - cp libc++abi.1.dylib R.framework/Versions/3.6/Resources/lib
+  - cp libomp.dylib      R.framework/Versions/3.6/Resources/lib
+  
   - mkdir -p R.framework/Resources/base
   - mkdir -p R.framework/Resources/base/R
   - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('Rcpp', 'RInside'), repos='$CRAN_MIRROR', lib='R.framework/Resources/library', type='mac.binary.el-capitan')"
