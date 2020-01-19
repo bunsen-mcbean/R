@@ -67,7 +67,7 @@ script:
   - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('rjson', 'base64enc', 'RProtoBuf', 'knitr', 'testthat', 'rlang', 'ggplot2', 'remotes'), repos='$CRAN_MIRROR', lib='R.framework/Resources/base/R', type='mac.binary.el-capitan')"
   
   - python patch-framework.py
-  
+  - install_name_tool -change /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libc++abi.1.dylib @executable_path/../Frameworks/R.framework/Versions/3.6/Resources/lib/libc++abi.1.dylib R.framework/Versions/3.6/Resources/lib/libc++.1.dylib
   - mv R.framework/Resources/base .
   
   - echo "#!/bin/sh"                              >tmp
