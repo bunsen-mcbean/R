@@ -99,6 +99,20 @@ wd = os.getcwd()
 path = os.path.join(wd, "R.framework")
 out_lib_dir = os.path.join(wd, "R.framework/Versions/3.6/Resources/lib")
 
+os.remove(os.path.join(wd, "R.framework/Headers"))
+os.remove(os.path.join(wd, "R.framework/Libraries"))
+os.remove(os.path.join(wd, "R.framework/PrivateHeaders"))
+os.remove(os.path.join(wd, "R.framework/R"))
+os.remove(os.path.join(wd, "R.framework/Resources"))
+os.remove(os.path.join(wd, "R.framework/Versions/3.6/Headers"))
+os.remove(os.path.join(wd, "R.framework/Versions/3.6/R"))
+os.remove(os.path.join(wd, "R.framework/Versions/3.6/Resources/R"))
+os.remove(os.path.join(wd, "R.framework/Versions/3.6/Resources/SVN-REVISION"))
+os.remove(os.path.join(wd, "R.framework/Versions/3.6/Resources/COPYING"))
+shutil.rmtree(os.path.join(wd, "R.framework/Versions/3.6/PrivateHeaders"))
+shutil.rmtree(os.path.join(wd, "R.framework/Versions/3.6/Resources/man1"))
+shutil.rmtree(os.path.join(wd, "R.framework/Versions/3.6/Resources/doc"))
+
 if os.path.exists(out_lib_dir) is False:
 	os.makedirs(out_lib_dir)
 
@@ -174,20 +188,6 @@ for lib in libs:
 	call(["install_name_tool", "-id", new_path, lib])
 
 	change_dep_paths(lib, changes)
-	
-os.remove(os.path.join(wd, "R.framework/Headers"))
-os.remove(os.path.join(wd, "R.framework/Libraries"))
-os.remove(os.path.join(wd, "R.framework/PrivateHeaders"))
-os.remove(os.path.join(wd, "R.framework/R"))
-os.remove(os.path.join(wd, "R.framework/Resources"))
-os.remove(os.path.join(wd, "R.framework/Versions/3.6/Headers"))
-os.remove(os.path.join(wd, "R.framework/Versions/3.6/R"))
-os.remove(os.path.join(wd, "R.framework/Versions/3.6/Resources/R"))
-os.remove(os.path.join(wd, "R.framework/Versions/3.6/Resources/SVN-REVISION"))
-os.remove(os.path.join(wd, "R.framework/Versions/3.6/Resources/COPYING"))
-shutil.rmtree(os.path.join(wd, "R.framework/Versions/3.6/PrivateHeaders"))
-shutil.rmtree(os.path.join(wd, "R.framework/Versions/3.6/Resources/man1"))
-shutil.rmtree(os.path.join(wd, "R.framework/Versions/3.6/Resources/doc"))
 
 call(['install_name_tool', '-id', '@executable_path/../Frameworks/R.framework/Versions/3.6/Resources/lib/libR.dylib', 'R.framework/Versions/3.6/Resources/lib/libR.dylib'])
 
