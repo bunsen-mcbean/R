@@ -162,6 +162,9 @@ for new_lib in new_libs:
 	change_dep_paths(new_lib, changes)
 	
 for lib in libs:
+	
+	if not lib.startswith(path):
+		continue
 
 	lib_base = os.path.basename(lib)
 	new_path = os.path.relpath(lib, path)
