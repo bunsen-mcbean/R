@@ -72,8 +72,8 @@ script:
   
   - python patch-framework.py
   - install_name_tool -id @executable_path/../Resources/modules/base/R/RInside/lib/libRInside.dylib   R.framework/Resources/base/R/RInside/lib/libRInside.dylib
-  - install_name_tool -id @executable_path/../Resources/modules/base/R/RInside/libs/RInside.so        R.framework/Resources/base/R/RInside/lib/RInside.so
-  - install_name_tool -id @executable_path/../Resources/modules/base/R/Rcpp/libs/Rcpp.so              R.framework/Resources/base/R/Rcpp/lib/libRInside.dylib
+  - install_name_tool -id @executable_path/../Resources/modules/base/R/RInside/libs/RInside.so        R.framework/Resources/base/R/RInside/libs/RInside.so
+  - install_name_tool -id @executable_path/../Resources/modules/base/R/Rcpp/libs/Rcpp.so              R.framework/Resources/base/R/Rcpp/libs/Rcpp.so
   
   # - install_name_tool -change /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libc++abi.1.dylib @executable_path/../Frameworks/R.framework/Versions/3.6/Resources/lib/libc++abi.1.dylib R.framework/Versions/3.6/Resources/lib/libc++.1.dylib
   # - install_name_tool -change /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libc++.1.dylib @executable_path/../Frameworks/R.framework/Versions/3.6/Resources/lib/libc++.1.dylib R.framework/Resources/library/RInside/lib/libRInside.dylib
