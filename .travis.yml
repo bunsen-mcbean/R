@@ -96,19 +96,15 @@ script:
   - cat tmp >R.framework/Versions/Current/Resources/bin/R
   - rm tmp
   
-  - tar -cjf R.framework.tar.bz2  R.framework
-  - tar -cjf base.tar.bz2         base
+  - mkdir -p artifacts
+  - tar -cjf artifacts/R.framework.tar.bz2  R.framework
+  - tar -cjf artifacts/base.tar.bz2         base
 
 after_success:
   - /usr/local/opt/curl/bin/curl
          --ftp-create-dirs
          --insecure
-         -T R.framework.tar.bz2
-         sftp://${SFTP_USER}:${SFTP_PASSWORD}@downloads.jamovi.org/home/${SFTP_USER}/downloads.jamovi.org/travis-builds/
-  - /usr/local/opt/curl/bin/curl
-         --ftp-create-dirs
-         --insecure
-         -T base.tar.bz2
+         -T "artifacts/{R.framework,base}.tar.bz2"
          sftp://${SFTP_USER}:${SFTP_PASSWORD}@downloads.jamovi.org/home/${SFTP_USER}/downloads.jamovi.org/travis-builds/
 
 # deploy:
