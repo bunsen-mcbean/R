@@ -51,7 +51,7 @@ script:
   
   - export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/Cellar/libxml2/2.9.4/lib/pkgconfig
 
-  - ./configure 'CC=clang' 'CXX=clang++' 'OBJC=clang' 'CFLAGS=-Wall -g -O2' 'CPPFLAGS=-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -I/usr/local/include' 'CXXFLAGS=-Wall -g -O2' 'OBJCFLAGS=-Wall -g -O2' 'FCFLAGS=-Wall -g -O2' 'F77FLAGS=-Wall -g -O2' --enable-R-framework --enable-R-shlib --with-aqua=no --with-tcltk=no --with-x=no --with-cairo=yes --with-libpng=yes --with-jpeglib=yes --with-libtiff=yes
+  - ./configure 'CC=clang' 'CXX=clang++' 'OBJC=clang' 'CFLAGS=-Wall -g -O2' 'CPPFLAGS=-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -I/usr/local/include' 'CXXFLAGS=-Wall -g -O2' 'OBJCFLAGS=-Wall -g -O2' 'FCFLAGS=-Wall -g -O2' 'F77FLAGS=-Wall -g -O2' --enable-R-framework --enable-R-shlib --with-aqua=yes --with-tcltk=no --with-x=no --with-cairo=yes --with-libpng=yes --with-jpeglib=yes --with-libtiff=yes
   - make
   - sudo make install
   - cd ..
