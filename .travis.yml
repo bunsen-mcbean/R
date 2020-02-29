@@ -8,6 +8,9 @@ env:
   CRAN_MIRROR: https://cran.microsoft.com/snapshot/2020-01-01
 
 install:
+
+  - brew install marcelomazza/homebrew-curl-libssh2/curl
+
 #  - curl -o clang.pkg https://cloud.r-project.org/bin/macosx/tools/clang-7.0.0.pkg
 #  - sudo installer -pkg clang.pkg -target /
   - curl -o gfortran.pkg https://cloud.r-project.org/bin/macosx/tools/gfortran-6.1.pkg
@@ -96,17 +99,24 @@ script:
   - mkdir -p artifacts
   - tar -cjf artifacts/R.framework.tar.bz2  R.framework
   - tar -cjf artifacts/base.tar.bz2         base
-  
-deploy:
-  - provider: s3
-    bucket: jamovi-library
-    region: us-east-1
-    access_key_id:
-      secure: "IaAionaTUStZ9cH5eGUBGr6VE8U1TDzkD8/BP1Vh+B4gOhXmKHkm1L5EDO/icQEsLsX+oZXokMA7eSoP5VocQzO41jIRmMHPu6Mmj38DO9UTGY5LyN2arSLjjk1aOH48vvEZQ51IeaOwqARJmpGSjFCQsgCjW5Ae8imZUaPqtmO60i84iDl/aRdlaDnUkDcpn+YqZKjbzz8Dn+4JfUOkBwfINKgJO5q6jkEZeXkRz+jISVvYxME7G3pFtkjaLhb0TtFkU9D+eCZhDu0vq/+yIfnDI84kpUIZVfDutKlsORVjeHY+TSpvsYWOXqNbrSYy9qMrB0LSXpYjFHN9d3r2jKExMhG22YbtM50r1ZewYTZ0s2bkJZVNLw7TRks39/LSQeVTKXgEgIPsz7OWBbK3PRewF8BWu+la3JZsDOIDyjDACbru4aiIlmpjIfaurscTKaj5E87s8zBJFGGRpVBjxzqoI0xng207KCZ8PbCeBGQsHmZS+KG9C1VIplTevs4iVOcqgthe8P4+jwNj18DDQ+DUfN8ZvTMBF+2/txbDrL1lgnM87A5IRSk1NwxnwH+VbGztU/tnGYWivvf6vI47mQS+JN3zdXvfSPWAoSn5bXJ9kiNdK7F3hVKmHxnwQH08KECwm/NlAhTu3/Py+I+QpK5znJkKppj8V/EqioKhC+c="
-    secret_access_key:
-      secure: "mGQp8vP7cVDXMt7f5tuYl/FB3FCFGZav1CWI8XkG7fYic0SJWZyFdnXNyWvvFOrr/haTn5XtSM454TAvmTQehL5aXV/bKc36j1ZK5xG3xPVOTxwsVssLQ07BXCZYdAIrQ4/l7S1fWW/bdODhq7IYVa1Dew9bHatijUpDuNHe8BgWExNJ0NhKOIVBIXJPRbxv8WpPWUb0oq3ZXjmUUxjx2Ohi6GwFktuqtLx75Cevkh+pUQoHJ9kMPWHdieJOkWJdmPVemzi9j49jwccrFEKAnBkrujdRuAVvpodwQth8wt/GbUVuTwbUQt1+A7VeN8Fvn/246nWNoHfnZLQkO91djAwuTjW2sludbBZfRG+CI2SV9a5NzCzLQtKA7RzjkZDQiw8JrBcokRmL6BPjUxC6YPmKuPxBnhJyENUPRcUGjMRIADSO7jEQ5vqO0gcKSXtvu0yv/I7zMao9wq23hIuR+sBytg7hpsSl2EFkqP7sZkK9G/znfci5Ow0aID9+xZQgxqPPBEA0gHnpDDveh/XwKnnGTZRINKbZPFWJoY8TRKlDDOkFlVoncX03ONMLDEGA8KOfT7Dmgl8HGmujF58qQMUUxBvxSIBMg7LDIAEa2mQUWXE8sFoHwvgqrooBWI4WVtwonzZJSi/xSjFiD+K24lYkKqgCTfOmJlx2bqz60CM=" 
-    skip_cleanup: true
-    upload-dir: travis-builds
-    local_dir: artifacts
+
+after_success:
+  - /usr/local/opt/curl/bin/curl
+         --ftp-create-dirs
+         --insecure
+         -T *.tar.bz2
+         sftp://${SFTP_USER}:${SFTP_PASSWORD}@downloads.jamovi.org/home/${SFTP_USER}/downloads.jamovi.org/travis-builds/
+
+# deploy:
+#   - provider: s3
+#     bucket: jamovi-library
+#     region: us-east-1
+#     access_key_id:
+#       secure: "IaAionaTUStZ9cH5eGUBGr6VE8U1TDzkD8/BP1Vh+B4gOhXmKHkm1L5EDO/icQEsLsX+oZXokMA7eSoP5VocQzO41jIRmMHPu6Mmj38DO9UTGY5LyN2arSLjjk1aOH48vvEZQ51IeaOwqARJmpGSjFCQsgCjW5Ae8imZUaPqtmO60i84iDl/aRdlaDnUkDcpn+YqZKjbzz8Dn+4JfUOkBwfINKgJO5q6jkEZeXkRz+jISVvYxME7G3pFtkjaLhb0TtFkU9D+eCZhDu0vq/+yIfnDI84kpUIZVfDutKlsORVjeHY+TSpvsYWOXqNbrSYy9qMrB0LSXpYjFHN9d3r2jKExMhG22YbtM50r1ZewYTZ0s2bkJZVNLw7TRks39/LSQeVTKXgEgIPsz7OWBbK3PRewF8BWu+la3JZsDOIDyjDACbru4aiIlmpjIfaurscTKaj5E87s8zBJFGGRpVBjxzqoI0xng207KCZ8PbCeBGQsHmZS+KG9C1VIplTevs4iVOcqgthe8P4+jwNj18DDQ+DUfN8ZvTMBF+2/txbDrL1lgnM87A5IRSk1NwxnwH+VbGztU/tnGYWivvf6vI47mQS+JN3zdXvfSPWAoSn5bXJ9kiNdK7F3hVKmHxnwQH08KECwm/NlAhTu3/Py+I+QpK5znJkKppj8V/EqioKhC+c="
+#     secret_access_key:
+#       secure: "mGQp8vP7cVDXMt7f5tuYl/FB3FCFGZav1CWI8XkG7fYic0SJWZyFdnXNyWvvFOrr/haTn5XtSM454TAvmTQehL5aXV/bKc36j1ZK5xG3xPVOTxwsVssLQ07BXCZYdAIrQ4/l7S1fWW/bdODhq7IYVa1Dew9bHatijUpDuNHe8BgWExNJ0NhKOIVBIXJPRbxv8WpPWUb0oq3ZXjmUUxjx2Ohi6GwFktuqtLx75Cevkh+pUQoHJ9kMPWHdieJOkWJdmPVemzi9j49jwccrFEKAnBkrujdRuAVvpodwQth8wt/GbUVuTwbUQt1+A7VeN8Fvn/246nWNoHfnZLQkO91djAwuTjW2sludbBZfRG+CI2SV9a5NzCzLQtKA7RzjkZDQiw8JrBcokRmL6BPjUxC6YPmKuPxBnhJyENUPRcUGjMRIADSO7jEQ5vqO0gcKSXtvu0yv/I7zMao9wq23hIuR+sBytg7hpsSl2EFkqP7sZkK9G/znfci5Ow0aID9+xZQgxqPPBEA0gHnpDDveh/XwKnnGTZRINKbZPFWJoY8TRKlDDOkFlVoncX03ONMLDEGA8KOfT7Dmgl8HGmujF58qQMUUxBvxSIBMg7LDIAEa2mQUWXE8sFoHwvgqrooBWI4WVtwonzZJSi/xSjFiD+K24lYkKqgCTfOmJlx2bqz60CM=" 
+#     skip_cleanup: true
+#     upload-dir: travis-builds
+#     local_dir: artifacts
   
   
