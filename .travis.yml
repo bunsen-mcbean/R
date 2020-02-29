@@ -104,7 +104,7 @@ after_success:
   - /usr/local/opt/curl/bin/curl
          --ftp-create-dirs
          --insecure
-         -T *.tar.bz2
+         -T artifacts/*.tar.bz2
          sftp://${SFTP_USER}:${SFTP_PASSWORD}@downloads.jamovi.org/home/${SFTP_USER}/downloads.jamovi.org/travis-builds/
 
 # deploy:
