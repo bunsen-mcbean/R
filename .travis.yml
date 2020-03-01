@@ -59,8 +59,8 @@ script:
   - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('rjson', 'base64enc', 'RProtoBuf', 'knitr', 'testthat', 'rlang', 'ggplot2', 'remotes'), repos='$CRAN_MIRROR', lib='R.framework/Resources/base/R', type='mac.binary.el-capitan')"
   
   - python patch-framework.py
-  - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/3.6/Resources/lib/libR.dylib      @executable_path/../../lib/libR.dylib      jamovi.app/Contents/Frameworks/R.framework/Versions/3.6/Resources/bin/exec/R
-  - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.dylib  @executable_path/../../lib/libRblas.dylib  jamovi.app/Contents/Frameworks/R.framework/Versions/3.6/Resources/bin/exec/R
+  - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/3.6/Resources/lib/libR.dylib      @executable_path/../../lib/libR.dylib      R.framework/Versions/3.6/Resources/bin/exec/R
+  - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.dylib  @executable_path/../../lib/libRblas.dylib  R.framework/Versions/3.6/Resources/bin/exec/R
   - install_name_tool -id @executable_path/../Resources/modules/base/R/RInside/lib/libRInside.dylib   R.framework/Resources/base/R/RInside/lib/libRInside.dylib
   - install_name_tool -id @executable_path/../Resources/modules/base/R/RInside/libs/RInside.so        R.framework/Resources/base/R/RInside/libs/RInside.so
   - install_name_tool -id @executable_path/../Resources/modules/base/R/Rcpp/libs/Rcpp.so              R.framework/Resources/base/R/Rcpp/libs/Rcpp.so
