@@ -5,7 +5,7 @@ osx_image: xcode7.3
 env:
   R_VERSION: 3.6.1
   FC: /usr/local/gfortran/bin/gfortran
-  CRAN_MIRROR: https://cran.microsoft.com/snapshot/2020-01-01
+  CRAN_MIRROR: https://cran.microsoft.com/snapshot/2020-03-14
 
 install:
 
@@ -56,7 +56,7 @@ script:
   - mkdir -p R.framework/Resources/base
   - mkdir -p R.framework/Resources/base/R
   - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('Rcpp', 'RInside'), repos='$CRAN_MIRROR', lib='R.framework/Resources/base/R', type='mac.binary.el-capitan')"
-  - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('jsonlite', 'base64enc', 'RProtoBuf', 'knitr', 'testthat', 'rlang', 'ggplot2', 'remotes'), repos='$CRAN_MIRROR', lib='R.framework/Resources/base/R', type='mac.binary.el-capitan')"
+  - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('rjson', 'lazyeval', 'plyr', 'zeallot', 'mime', 'reshape2', 'base64enc', 'RProtoBuf', 'knitr', 'testthat', 'rlang', 'ggplot2', 'remotes', 'jsonlite'), repos='$CRAN_MIRROR', lib='R.framework/Resources/base/R', type='mac.binary.el-capitan')"
 
   # but we want to use ggplot2 3.3, so:
   # - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('ggplot2'), repos='https://cran.microsoft.com/snapshot/2020-03-14', lib='R.framework/Resources/base/R', type='mac.binary.el-capitan')"
