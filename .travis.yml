@@ -3,9 +3,9 @@ os: osx
 osx_image: xcode7.3
 
 env:
-  R_VERSION: 3.6.1
+  R_VERSION: 3.6.3
   FC: /usr/local/gfortran/bin/gfortran
-  CRAN_MIRROR: https://cran.microsoft.com/snapshot/2020-03-14
+  CRAN_MIRROR: https://cran.microsoft.com/snapshot/2020-04-01
 
 install:
 
