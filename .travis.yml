@@ -55,7 +55,10 @@ script:
   
   - mkdir -p R.framework/Resources/base
   - mkdir -p R.framework/Resources/base/R
-  - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('R6', 'RColorBrewer', 'base64enc', 'bitops', 'fansi', 'farver', 'highr', 'labeling', 'magrittr', 'praise', 'prettyunits', 'rlang', 'rstudioapi', 'utf8', 'viridisLite', 'yaml', 'RCurl', 'Rcpp', 'assertthat', 'backports', 'colorspace', 'crayon', 'digest', 'ellipsis', 'evaluate', 'glue', 'gtable', 'jsonlite', 'mime', 'pkgconfig', 'ps', 'remotes', 'stringi', 'withr', 'xfun', 'RInside', 'RProtoBuf', 'cli', 'lifecycle', 'markdown', 'munsell', 'processx', 'rprojroot', 'stringr', 'vctrs', 'callr', 'desc', 'knitr', 'pillar', 'scales', 'pkgbuild', 'tibble', 'pkgload', 'testthat', 'isoband', 'ggplot2', 'curl'), repos='$CRAN_MIRROR', lib='R.framework/Resources/base/R', type='mac.binary.el-capitan')"
+
+  # have to install 1.0.3 of Rcpp from 03-2020, because 1.0.4 is broken
+  - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('Rcpp'), repos='https://cran.microsoft.com/snapshot/2020-03-01', lib='R.framework/Resources/base/R', type='mac.binary.el-capitan')"
+  - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('R6', 'RColorBrewer', 'base64enc', 'bitops', 'fansi', 'farver', 'highr', 'labeling', 'magrittr', 'praise', 'prettyunits', 'rlang', 'rstudioapi', 'utf8', 'viridisLite', 'yaml', 'RCurl', 'assertthat', 'backports', 'colorspace', 'crayon', 'digest', 'ellipsis', 'evaluate', 'glue', 'gtable', 'jsonlite', 'mime', 'pkgconfig', 'ps', 'remotes', 'stringi', 'withr', 'xfun', 'RInside', 'RProtoBuf', 'cli', 'lifecycle', 'markdown', 'munsell', 'processx', 'rprojroot', 'stringr', 'vctrs', 'callr', 'desc', 'knitr', 'pillar', 'scales', 'pkgbuild', 'tibble', 'pkgload', 'testthat', 'isoband', 'ggplot2', 'curl'), repos='$CRAN_MIRROR', lib='R.framework/Resources/base/R', type='mac.binary.el-capitan')"
 
   - python patch-framework.py
   - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/3.6/Resources/lib/libR.dylib      @executable_path/../../lib/libR.dylib      R.framework/Versions/3.6/Resources/bin/exec/R
