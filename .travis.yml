@@ -1,77 +1,35 @@
 
 os: osx
-osx_image: xcode7.3
+osx_image: xcode11.3
 
 env:
-  R_VERSION: 3.6.3
-  FC: /usr/local/gfortran/bin/gfortran
-  CRAN_MIRROR: https://cran.microsoft.com/snapshot/2020-05-01
+  R_VERSION: 4.0.2
+  CRAN_MIRROR: https://cran.microsoft.com/snapshot/2020-08-24
 
 install:
 
   - brew install marcelomazza/homebrew-curl-libssh2/curl
 
-  - curl -o gfortran.pkg https://cloud.r-project.org/bin/macosx/tools/gfortran-6.1.pkg
-  - sudo installer -pkg gfortran.pkg -target /
-  - curl -o XQuartz.pkg https://www.jamovi.org/misc/XQuartz.pkg
-  - sudo installer -package XQuartz.pkg -target /
-  - curl https://cloud.r-project.org/src/base/R-3/R-$R_VERSION.tar.gz | tar xz
-  - curl -o xz.tar.gz https://mac.r-project.org/libs/xz-5.2.3-darwin.15-x86_64.tar.gz
-  - sudo tar fxzk xz.tar.gz -C / || true
-  - curl https://mac.r-project.org/libs/pixman-0.32.6-darwin.13-x86_64.tar.gz | sudo tar xzk -C / || true
-  - curl https://mac.r-project.org/libs/fontconfig-2.11.1-darwin.13-x86_64.tar.gz | sudo tar xzk -C / || true
-  - curl https://mac.r-project.org/libs/freetype-2.5.5-darwin.13-x86_64.tar.gz | sudo tar xzk -C / || true
-  - curl https://mac.r-project.org/libs/cairo-1.14.2-darwin.13-x86_64.tar.gz | sudo tar xzk -C / || true
   - curl -o R.pkg https://cloud.r-project.org/bin/macosx/R-$R_VERSION.pkg
   - sudo installer -pkg R.pkg -target /
-  - cp /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libc++.1.dylib .
-  - cp /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libc++abi.1.dylib .
-  - cp /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libomp.dylib .
-  - sudo rm -rf /Library/Frameworks/R.framework
 
 script:
 
-  - cd R-$R_VERSION
-  
-  - cat configure | grep -v "#include <cairo-xlib.h>" >tmp
-  - cat tmp >configure
-  - rm tmp
-  
-  - export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/Cellar/libxml2/2.9.4/lib/pkgconfig
-
-  - ./configure 'CC=clang' 'CXX=clang++' 'OBJC=clang' 'CFLAGS=-Wall -g -O2' 'CPPFLAGS=-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -I/usr/local/include' 'CXXFLAGS=-Wall -g -O2' 'OBJCFLAGS=-Wall -g -O2' 'FCFLAGS=-Wall -g -O2' 'F77FLAGS=-Wall -g -O2' --enable-R-framework --enable-R-shlib --with-aqua=yes --with-tcltk=no --with-x=no --with-cairo=yes --with-libpng=yes --with-jpeglib=yes --with-libtiff=yes
-  - make
-  - sudo make install
-  - cd ..
-  
-  - sudo cp libc++.1.dylib     /Library/Frameworks/R.framework/Versions/3.6/Resources/lib
-  - sudo cp libc++abi.1.dylib  /Library/Frameworks/R.framework/Versions/3.6/Resources/lib
-  - sudo cp libomp.dylib       /Library/Frameworks/R.framework/Versions/3.6/Resources/lib
-  
   - ditto /Library/Frameworks/R.framework R.framework
-  - cp libc++.1.dylib    R.framework/Versions/3.6/Resources/lib
-  - cp libc++abi.1.dylib R.framework/Versions/3.6/Resources/lib
-  - cp libomp.dylib      R.framework/Versions/3.6/Resources/lib
-  
+  - rm -f R.framework/Versions/4.0/Resources/fontconfig/fonts/conf.d/*
+  - cp /Library/Frameworks/R.framework/Versions/4.0/Resources/fontconfig/fonts/conf.d/* R.framework/Versions/4.0/Resources/fontconfig/fonts/conf.d/
   - mkdir -p R.framework/Resources/base
   - mkdir -p R.framework/Resources/base/R
 
-  # have to install 1.0.3 of Rcpp from 03-2020, because 1.0.4 is broken
-  - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('Rcpp'), repos='https://cran.microsoft.com/snapshot/2020-03-01', lib='R.framework/Resources/base/R', type='mac.binary.el-capitan')"
-  - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('R6', 'RColorBrewer', 'base64enc', 'bitops', 'fansi', 'farver', 'highr', 'labeling', 'magrittr', 'praise', 'prettyunits', 'rlang', 'rstudioapi', 'utf8', 'viridisLite', 'yaml', 'RCurl', 'assertthat', 'backports', 'colorspace', 'crayon', 'digest', 'ellipsis', 'evaluate', 'glue', 'gtable', 'jsonlite', 'mime', 'pkgconfig', 'ps', 'remotes', 'stringi', 'withr', 'xfun', 'RInside', 'RProtoBuf', 'cli', 'lifecycle', 'markdown', 'munsell', 'processx', 'rprojroot', 'stringr', 'vctrs', 'callr', 'desc', 'knitr', 'pillar', 'scales', 'pkgbuild', 'tibble', 'pkgload', 'testthat', 'isoband', 'ggplot2', 'curl', 'tinytex', 'rmarkdown'), repos='$CRAN_MIRROR', lib='R.framework/Resources/base/R', type='mac.binary.el-capitan')"
+  - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('R6', 'RColorBrewer', 'base64enc', 'bitops', 'curl', 'fansi', 'farver', 'highr', 'labeling', 'magrittr', 'praise', 'prettyunits', 'rlang', 'rstudioapi', 'systemfonts', 'utf8', 'viridisLite', 'yaml', 'RCurl', 'Rcpp', 'assertthat', 'backports', 'colorspace', 'crayon', 'digest', 'ellipsis', 'evaluate', 'glue', 'gtable', 'jsonlite', 'mime', 'pkgconfig', 'ps', 'ragg', 'remotes', 'stringi', 'withr', 'xfun', 'RInside', 'RProtoBuf', 'cli', 'htmltools', 'lifecycle', 'markdown', 'munsell', 'processx', 'rprojroot', 'stringr', 'tinytex', 'vctrs', 'callr', 'desc', 'knitr', 'pillar', 'scales', 'pkgbuild', 'rmarkdown', 'tibble', 'pkgload', 'testthat', 'isoband', 'ggplot2'), repos='$CRAN_MIRROR', lib='R.framework/Resources/base/R', type='mac.binary')"
 
   - python patch-framework.py
-  - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/3.6/Resources/lib/libR.dylib      @executable_path/../../lib/libR.dylib      R.framework/Versions/3.6/Resources/bin/exec/R
-  - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.dylib  @executable_path/../../lib/libRblas.dylib  R.framework/Versions/3.6/Resources/bin/exec/R
+  - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/4.0/Resources/lib/libR.dylib      @executable_path/../../lib/libR.dylib      R.framework/Versions/4.0/Resources/bin/exec/R
+  - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib  @executable_path/../../lib/libRblas.dylib  R.framework/Versions/4.0/Resources/bin/exec/R
   - install_name_tool -id @executable_path/../Resources/modules/base/R/RInside/lib/libRInside.dylib   R.framework/Resources/base/R/RInside/lib/libRInside.dylib
   - install_name_tool -id @executable_path/../Resources/modules/base/R/RInside/libs/RInside.so        R.framework/Resources/base/R/RInside/libs/RInside.so
   - install_name_tool -id @executable_path/../Resources/modules/base/R/Rcpp/libs/Rcpp.so              R.framework/Resources/base/R/Rcpp/libs/Rcpp.so
-  
-  # - install_name_tool -change /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libc++abi.1.dylib @executable_path/../Frameworks/R.framework/Versions/3.6/Resources/lib/libc++abi.1.dylib R.framework/Versions/3.6/Resources/lib/libc++.1.dylib
-  # - install_name_tool -change /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libc++.1.dylib @executable_path/../Frameworks/R.framework/Versions/3.6/Resources/lib/libc++.1.dylib R.framework/Resources/library/RInside/lib/libRInside.dylib
-  # - install_name_tool -change /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libc++.1.dylib @executable_path/../Frameworks/R.framework/Versions/3.6/Resources/lib/libc++.1.dylib R.framework/Resources/library/RInside/libs/RInside.so
-  # - install_name_tool -change /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libc++.1.dylib @executable_path/../Frameworks/R.framework/Versions/3.6/Resources/lib/libc++.1.dylib R.framework/Resources/library/Rcpp/libs/Rcpp.so
-  
+  - codesign --remove-signature R.framework/Versions/4.0/Resources/bin/exec/R
   - mv R.framework/Resources/base .
   
   - echo "#!/bin/sh"                              >tmp
