@@ -47,8 +47,8 @@ script:
   - rm tmp
   
   - mkdir -p artifacts
-  - tar -cjf artifacts/R.framework.tar.bz2  R.framework
-  - tar -cjf artifacts/base.tar.bz2         base
+  - tar -cjf artifacts/R-$R_VERSION.framework.tar.bz2  R.framework
+  - tar -cjf artifacts/base-$R_VERSION.tar.bz2         base
 
 after_success:
   - echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
@@ -56,7 +56,7 @@ after_success:
          --ftp-create-dirs
          --insecure
          --key /tmp/sftp_rsa
-         -T "artifacts/{R.framework,base}.tar.bz2"
+         -T "artifacts/{R.framework,base}-$R_VERSION.tar.bz2"
          sftp://${SFTP_USER}@jamovi.org/home/${SFTP_USER}/jamovi.org/downloads/
 
 # deploy:
