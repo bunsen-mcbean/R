@@ -47,7 +47,7 @@ script:
   - rm tmp
   
   - mkdir -p artifacts
-  - tar -cjf artifacts/R-$R_VERSION.framework.tar.bz2  R.framework
+  - tar -cjf artifacts/R.framework-$R_VERSION.tar.bz2  R.framework
   - tar -cjf artifacts/base-$R_VERSION.tar.bz2         base
 
 after_success:
