@@ -3,8 +3,8 @@ os: osx
 osx_image: xcode11.3
 
 env:
-  R_VERSION: 4.0.2
-  CRAN_MIRROR: https://cran.microsoft.com/snapshot/2020-08-24
+  R_VERSION: 4.0.4
+  CRAN_MIRROR: https://cran.microsoft.com/snapshot/2021-03-21
 
 install:
 
@@ -24,7 +24,7 @@ script:
   - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('R6', 'RColorBrewer', 'base64enc', 'bitops', 'curl', 'fansi', 'farver', 'highr', 'labeling', 'magrittr', 'praise', 'prettyunits', 'rlang', 'rstudioapi', 'systemfonts', 'utf8', 'viridisLite', 'yaml', 'RCurl', 'Rcpp', 'assertthat', 'backports', 'colorspace', 'crayon', 'digest', 'ellipsis', 'evaluate', 'glue', 'gtable', 'jsonlite', 'mime', 'pkgconfig', 'ps', 'ragg', 'remotes', 'stringi', 'withr', 'xfun', 'RInside', 'RProtoBuf', 'cli', 'htmltools', 'lifecycle', 'markdown', 'munsell', 'processx', 'rprojroot', 'stringr', 'tinytex', 'vctrs', 'callr', 'desc', 'knitr', 'pillar', 'scales', 'pkgbuild', 'rmarkdown', 'tibble', 'pkgload', 'testthat', 'isoband', 'ggplot2'), repos='$CRAN_MIRROR', lib='R.framework/Resources/base/R', type='mac.binary')"
 
   # newer ragg
-  - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages('ragg', repos='https://cran.microsoft.com/snapshot/2021-02-19', lib='R.framework/Resources/base/R', type='mac.binary')"
+  # - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages('ragg', repos='https://cran.microsoft.com/snapshot/2021-02-19', lib='R.framework/Resources/base/R', type='mac.binary')"
 
   - python patch-framework.py
   - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/4.0/Resources/lib/libR.dylib      @executable_path/../../lib/libR.dylib      R.framework/Versions/4.0/Resources/bin/exec/R
