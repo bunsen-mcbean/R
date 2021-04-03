@@ -3,7 +3,7 @@ os: osx
 osx_image: xcode11.3
 
 env:
-  R_VERSION: 4.0.4
+  R_VERSION: 4.0.5
   CRAN_MIRROR: https://cran.microsoft.com/snapshot/2021-04-01
 
 install:
