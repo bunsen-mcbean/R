@@ -53,7 +53,7 @@ after_success:
          --ftp-create-dirs
          --insecure
          --key /tmp/sftp_rsa
-         -T "artifacts/R.framework-$R_VERSION.tar.bz2"
+         -T "artifacts/{R.framework,base}-$R_VERSION.tar.bz2"
          sftp://${SFTP_USER}@jamovi.org/home/${SFTP_USER}/jamovi.org/downloads/
 
 # deploy:
