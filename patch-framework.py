@@ -30,7 +30,7 @@ def locate_libs(path):
 	
 				line = line.strip()
 
-				if line.startswith("/Library/Frameworks/R.framework/Versions/4.0/Resources/") or line.startswith("/opt/") or line.startswith("/usr/local/"):
+				if line.startswith("/Library/Frameworks/R.framework/Versions/4.1/Resources/") or line.startswith("/opt/") or line.startswith("/usr/local/"):
 		
 					file = line.split()[0]
 					if os.path.isfile(file):
@@ -97,27 +97,27 @@ def change_dep_paths(lib, changes):
 wd = os.getcwd()
 
 path = os.path.join(wd, "R.framework")
-out_lib_dir = os.path.join(wd, "R.framework/Versions/4.0/Resources/lib")
+out_lib_dir = os.path.join(wd, "R.framework/Versions/4.1/Resources/lib")
 
 os.remove(os.path.join(wd, "R.framework/Headers"))
 os.remove(os.path.join(wd, "R.framework/Libraries"))
 os.remove(os.path.join(wd, "R.framework/PrivateHeaders"))
 os.remove(os.path.join(wd, "R.framework/R"))
 os.remove(os.path.join(wd, "R.framework/Resources"))
-os.remove(os.path.join(wd, "R.framework/Versions/4.0/Headers"))
-os.remove(os.path.join(wd, "R.framework/Versions/4.0/R"))
-os.remove(os.path.join(wd, "R.framework/Versions/4.0/Resources/R"))
-os.remove(os.path.join(wd, "R.framework/Versions/4.0/Resources/SVN-REVISION"))
-os.remove(os.path.join(wd, "R.framework/Versions/4.0/Resources/COPYING"))
-shutil.rmtree(os.path.join(wd, "R.framework/Versions/4.0/PrivateHeaders"))
-shutil.rmtree(os.path.join(wd, "R.framework/Versions/4.0/Resources/man1"))
-shutil.rmtree(os.path.join(wd, "R.framework/Versions/4.0/Resources/doc"))
+os.remove(os.path.join(wd, "R.framework/Versions/4.1/Headers"))
+os.remove(os.path.join(wd, "R.framework/Versions/4.1/R"))
+os.remove(os.path.join(wd, "R.framework/Versions/4.1/Resources/R"))
+os.remove(os.path.join(wd, "R.framework/Versions/4.1/Resources/SVN-REVISION"))
+os.remove(os.path.join(wd, "R.framework/Versions/4.1/Resources/COPYING"))
+shutil.rmtree(os.path.join(wd, "R.framework/Versions/4.1/PrivateHeaders"))
+shutil.rmtree(os.path.join(wd, "R.framework/Versions/4.1/Resources/man1"))
+shutil.rmtree(os.path.join(wd, "R.framework/Versions/4.1/Resources/doc"))
 
 if os.path.exists(out_lib_dir) is False:
 	os.makedirs(out_lib_dir)
 
 libs = locate_libs(path)
-libs.append(os.path.join(wd, "R.framework/Versions/4.0/Resources/bin/exec/R"))
+libs.append(os.path.join(wd, "R.framework/Versions/4.1/Resources/bin/exec/R"))
 
 dependencies = extract_lib_dependencies(libs)
 
@@ -139,10 +139,10 @@ for dependency in dependencies:
 			
 		new_libs.append(dep_target)
 		
-		change = { "old" : dependency, "new" : "@executable_path/../Frameworks/R.framework/Versions/4.0/Resources/lib/" + dep_base }
+		change = { "old" : dependency, "new" : "@executable_path/../Frameworks/R.framework/Versions/4.1/Resources/lib/" + dep_base }
 		changes.append(change)
 
-		change = { "old" : dep_base, "new" : "@executable_path/../Frameworks/R.framework/Versions/4.0/Resources/lib/" + dep_base }
+		change = { "old" : dep_base, "new" : "@executable_path/../Frameworks/R.framework/Versions/4.1/Resources/lib/" + dep_base }
 		changes.append(change)
 		
 	else:
@@ -156,7 +156,7 @@ print(changes)
 for new_lib in new_libs:
 
 	lib_base = os.path.basename(new_lib)
-	new_path = "@executable_path/../Frameworks/R.framework/Versions/4.0/Resources/lib/" + lib_base
+	new_path = "@executable_path/../Frameworks/R.framework/Versions/4.1/Resources/lib/" + lib_base
 	call(["install_name_tool", "-id", new_path, new_lib])
 
 	change_dep_paths(new_lib, changes)
@@ -169,20 +169,20 @@ for lib in libs:
 	lib_base = os.path.basename(lib)
 	new_path = os.path.relpath(lib, path)
 	
-	new_path = new_path.replace("R.framework/Resources/", "R.framework/Versions/4.0/Resources/")
-	new_path = new_path.replace("R.framework/Versions/Current/", "R.framework/Versions/4.0/")
-	new_path = new_path.replace("R.framework/Libraries/", "R.framework/Versions/4.0/lib/")
+	new_path = new_path.replace("R.framework/Resources/", "R.framework/Versions/4.1/Resources/")
+	new_path = new_path.replace("R.framework/Versions/Current/", "R.framework/Versions/4.1/")
+	new_path = new_path.replace("R.framework/Libraries/", "R.framework/Versions/4.1/lib/")
 
 	if new_path.startswith(".."):
-		new_path = "@executable_path/../Frameworks/R.framework/Versions/4.0/Resources/lib/" + lib_base
+		new_path = "@executable_path/../Frameworks/R.framework/Versions/4.1/Resources/lib/" + lib_base
 	else:
 	
 		if new_path.startswith("Resources/"):
-			new_path = new_path.replace("Resources/", "Versions/4.0/Resources/")
+			new_path = new_path.replace("Resources/", "Versions/4.1/Resources/")
 		if new_path.startswith("Versions/Current/"):
-			new_path = new_path.replace("Versions/Current/", "Versions/4.0/")
+			new_path = new_path.replace("Versions/Current/", "Versions/4.1/")
 		if new_path.startswith("Libraries/"):
-			new_path = new_path.replace("Libraries/", "Versions/4.0/Resources/")
+			new_path = new_path.replace("Libraries/", "Versions/4.1/Resources/")
 	
 		new_path = "@executable_path/../Frameworks/R.framework/" + new_path
 
@@ -192,6 +192,6 @@ for lib in libs:
 
 	change_dep_paths(lib, changes)
 
-call(['install_name_tool', '-id', '@executable_path/../Frameworks/R.framework/Versions/4.0/Resources/lib/libR.dylib', 'R.framework/Versions/4.0/Resources/lib/libR.dylib'])
+call(['install_name_tool', '-id', '@executable_path/../Frameworks/R.framework/Versions/4.1/Resources/lib/libR.dylib', 'R.framework/Versions/4.1/Resources/lib/libR.dylib'])
 
-call(['ln', '-s', 'Versions/4.0/Resources', 'R.framework/Resources'])
+call(['ln', '-s', 'Versions/4.1/Resources', 'R.framework/Resources'])
