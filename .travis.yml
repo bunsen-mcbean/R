@@ -16,39 +16,36 @@ install:
 script:
 
   - ditto /Library/Frameworks/R.framework R.framework
-  - rm -f R.framework/Versions/4.1/Resources/fontconfig/fonts/conf.d/*
-  - cp /Library/Frameworks/R.framework/Versions/4.1/Resources/fontconfig/fonts/conf.d/* R.framework/Versions/4.1/Resources/fontconfig/fonts/conf.d/
-  - mkdir -p R.framework/Resources/base
-  - mkdir -p R.framework/Resources/base/R
+#   - rm -f R.framework/Versions/4.1/Resources/fontconfig/fonts/conf.d/*
+#   - cp /Library/Frameworks/R.framework/Versions/4.1/Resources/fontconfig/fonts/conf.d/* R.framework/Versions/4.1/Resources/fontconfig/fonts/conf.d/
+#   - mkdir -p R.framework/Resources/base
+#   - mkdir -p R.framework/Resources/base/R
 
-  - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('R6', 'RColorBrewer', 'base64enc', 'bitops', 'curl', 'fansi', 'farver', 'highr', 'labeling', 'magrittr', 'praise', 'prettyunits', 'rlang', 'rstudioapi', 'systemfonts', 'utf8', 'viridisLite', 'yaml', 'RCurl', 'Rcpp', 'assertthat', 'backports', 'colorspace', 'crayon', 'digest', 'ellipsis', 'evaluate', 'glue', 'gtable', 'jsonlite', 'mime', 'pkgconfig', 'ps', 'ragg', 'remotes', 'stringi', 'withr', 'xfun', 'RInside', 'RProtoBuf', 'cli', 'htmltools', 'lifecycle', 'markdown', 'munsell', 'processx', 'rprojroot', 'stringr', 'tinytex', 'vctrs', 'callr', 'desc', 'knitr', 'pillar', 'scales', 'pkgbuild', 'rmarkdown', 'tibble', 'pkgload', 'testthat', 'isoband', 'ggplot2'), repos='$CRAN_MIRROR', lib='R.framework/Resources/base/R', type='mac.binary')"
+#   - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('R6', 'RColorBrewer', 'base64enc', 'brio', 'cpp11', 'curl', 'farver', 'fastmap', 'magrittr', 'praise', 'rprojroot', 'rstudioapi', 'utf8', 'viridisLite', 'yaml', 'Rcpp', 'colorspace', 'crayon', 'digest', 'evaluate', 'fansi', 'glue', 'gtable', 'isoband', 'jsonlite', 'labeling', 'pkgconfig', 'ps', 'remotes', 'rlang', 'stringi', 'systemfonts', 'withr', 'xfun', 'RInside', 'RProtoBuf', 'cli', 'desc', 'diffobj', 'ellipsis', 'highr', 'htmltools', 'lifecycle', 'munsell', 'processx', 'stringr', 'textshaping', 'tinytex', 'callr', 'jquerylib', 'knitr', 'pkgload', 'ragg', 'scales', 'vctrs', 'pillar', 'rmarkdown', 'tibble', 'ggplot2', 'rematch2', 'waldo', 'testthat'), repos='$CRAN_MIRROR', lib='R.framework/Resources/base/R', type='mac.binary')"
 
-  # newer ragg
-  # - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages('ragg', repos='https://cran.microsoft.com/snapshot/2021-02-19', lib='R.framework/Resources/base/R', type='mac.binary')"
-
-  - python patch-framework.py
-  - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/4.1/Resources/lib/libR.dylib      @executable_path/../../lib/libR.dylib      R.framework/Versions/4.1/Resources/bin/exec/R
-  - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.dylib  @executable_path/../../lib/libRblas.dylib  R.framework/Versions/4.1/Resources/bin/exec/R
-  - install_name_tool -id @executable_path/../Resources/modules/base/R/RInside/lib/libRInside.dylib   R.framework/Resources/base/R/RInside/lib/libRInside.dylib
-  - install_name_tool -id @executable_path/../Resources/modules/base/R/RInside/libs/RInside.so        R.framework/Resources/base/R/RInside/libs/RInside.so
-  - install_name_tool -id @executable_path/../Resources/modules/base/R/Rcpp/libs/Rcpp.so              R.framework/Resources/base/R/Rcpp/libs/Rcpp.so
-  - codesign --remove-signature R.framework/Versions/4.1/Resources/bin/exec/R
-  - mv R.framework/Resources/base .
+#   - python patch-framework.py
+#   - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/4.1/Resources/lib/libR.dylib      @executable_path/../../lib/libR.dylib      R.framework/Versions/4.1/Resources/bin/exec/R
+#   - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.dylib  @executable_path/../../lib/libRblas.dylib  R.framework/Versions/4.1/Resources/bin/exec/R
+#   - install_name_tool -id @executable_path/../Resources/modules/base/R/RInside/lib/libRInside.dylib   R.framework/Resources/base/R/RInside/lib/libRInside.dylib
+#   - install_name_tool -id @executable_path/../Resources/modules/base/R/RInside/libs/RInside.so        R.framework/Resources/base/R/RInside/libs/RInside.so
+#   - install_name_tool -id @executable_path/../Resources/modules/base/R/Rcpp/libs/Rcpp.so              R.framework/Resources/base/R/Rcpp/libs/Rcpp.so
+#   - codesign --remove-signature R.framework/Versions/4.1/Resources/bin/exec/R
+#   - mv R.framework/Resources/base .
   
-  - echo "#!/bin/sh"                              >tmp
-  - echo "# Shell wrapper for R executable."      >>tmp
-  - echo HERE=\$\(cd \"\$\(dirname \"\$0\"\)\"\; pwd\) >>tmp
-  - echo export R_HOME=\$HERE/..                  >>tmp
-  - echo export R_SHARE_DIR=\$R_HOME/share        >>tmp
-  - echo export R_INCLUDE_DIR=\$R_HOME/include    >>tmp
-  - echo export R_DOC_DIR=\$R_HOME/doc            >>tmp
-  - tail -n +41 R.framework/Versions/Current/Resources/bin/R >>tmp
-  - cat tmp >R.framework/Versions/Current/Resources/bin/R
-  - rm tmp
+#   - echo "#!/bin/sh"                              >tmp
+#   - echo "# Shell wrapper for R executable."      >>tmp
+#   - echo HERE=\$\(cd \"\$\(dirname \"\$0\"\)\"\; pwd\) >>tmp
+#   - echo export R_HOME=\$HERE/..                  >>tmp
+#   - echo export R_SHARE_DIR=\$R_HOME/share        >>tmp
+#   - echo export R_INCLUDE_DIR=\$R_HOME/include    >>tmp
+#   - echo export R_DOC_DIR=\$R_HOME/doc            >>tmp
+#   - tail -n +41 R.framework/Versions/Current/Resources/bin/R >>tmp
+#   - cat tmp >R.framework/Versions/Current/Resources/bin/R
+#   - rm tmp
   
-  - mkdir -p artifacts
+#   - mkdir -p artifacts
   - tar -cjf artifacts/R.framework-$R_VERSION.tar.bz2  R.framework
-  - tar -cjf artifacts/base-$R_VERSION.tar.bz2         base
+#  - tar -cjf artifacts/base-$R_VERSION.tar.bz2         base
 
 after_success:
   - echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
@@ -56,7 +53,7 @@ after_success:
          --ftp-create-dirs
          --insecure
          --key /tmp/sftp_rsa
-         -T "artifacts/{R.framework,base}-$R_VERSION.tar.bz2"
+         -T "artifacts/R.framework-$R_VERSION.tar.bz2"
          sftp://${SFTP_USER}@jamovi.org/home/${SFTP_USER}/jamovi.org/downloads/
 
 # deploy:
