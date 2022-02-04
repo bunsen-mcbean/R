@@ -4,7 +4,7 @@ osx_image: xcode11.3
 
 env:
   R_VERSION: 4.1.2
-  CRAN_MIRROR: https://cran.microsoft.com/snapshot/2022-01-01
+  CRAN_MIRROR: https://packagemanager.rstudio.com/all/2021-12-29+Y3JhbiwyOjQ1MjYyMTU7NTA1NEIwRDA
 
 install:
 
