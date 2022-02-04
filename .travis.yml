@@ -10,7 +10,7 @@ install:
 
   - brew install marcelomazza/homebrew-curl-libssh2/curl
 
-  - curl -o R.pkg https://cloud.r-project.org/bin/macosx/R-$R_VERSION.pkg
+  - curl -o R.pkg https://cran.r-project.org/bin/macosx/base/R-$R_VERSION.pkg
   - sudo installer -pkg R.pkg -target /
 
 script:
