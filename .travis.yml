@@ -43,7 +43,7 @@ script:
 #   - cat tmp >R.framework/Versions/Current/Resources/bin/R
 #   - rm tmp
   
-#   - mkdir -p artifacts
+  - mkdir -p artifacts
   - tar -cjf artifacts/R.framework-$R_VERSION.tar.bz2  R.framework
 #  - tar -cjf artifacts/base-$R_VERSION.tar.bz2         base
 
