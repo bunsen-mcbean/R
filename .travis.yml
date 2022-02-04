@@ -3,8 +3,8 @@ os: osx
 osx_image: xcode11.3
 
 env:
-  R_VERSION: 4.0.5
-  CRAN_MIRROR: https://cran.microsoft.com/snapshot/2021-04-01
+  R_VERSION: 4.1.2
+  CRAN_MIRROR: https://cran.microsoft.com/snapshot/2022-01-01
 
 install:
 
@@ -16,8 +16,8 @@ install:
 script:
 
   - ditto /Library/Frameworks/R.framework R.framework
-  - rm -f R.framework/Versions/4.0/Resources/fontconfig/fonts/conf.d/*
-  - cp /Library/Frameworks/R.framework/Versions/4.0/Resources/fontconfig/fonts/conf.d/* R.framework/Versions/4.0/Resources/fontconfig/fonts/conf.d/
+  - rm -f R.framework/Versions/4.1/Resources/fontconfig/fonts/conf.d/*
+  - cp /Library/Frameworks/R.framework/Versions/4.1/Resources/fontconfig/fonts/conf.d/* R.framework/Versions/4.1/Resources/fontconfig/fonts/conf.d/
   - mkdir -p R.framework/Resources/base
   - mkdir -p R.framework/Resources/base/R
 
@@ -27,12 +27,12 @@ script:
   # - /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages('ragg', repos='https://cran.microsoft.com/snapshot/2021-02-19', lib='R.framework/Resources/base/R', type='mac.binary')"
 
   - python patch-framework.py
-  - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/4.0/Resources/lib/libR.dylib      @executable_path/../../lib/libR.dylib      R.framework/Versions/4.0/Resources/bin/exec/R
-  - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib  @executable_path/../../lib/libRblas.dylib  R.framework/Versions/4.0/Resources/bin/exec/R
+  - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/4.1/Resources/lib/libR.dylib      @executable_path/../../lib/libR.dylib      R.framework/Versions/4.1/Resources/bin/exec/R
+  - install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.dylib  @executable_path/../../lib/libRblas.dylib  R.framework/Versions/4.1/Resources/bin/exec/R
   - install_name_tool -id @executable_path/../Resources/modules/base/R/RInside/lib/libRInside.dylib   R.framework/Resources/base/R/RInside/lib/libRInside.dylib
   - install_name_tool -id @executable_path/../Resources/modules/base/R/RInside/libs/RInside.so        R.framework/Resources/base/R/RInside/libs/RInside.so
   - install_name_tool -id @executable_path/../Resources/modules/base/R/Rcpp/libs/Rcpp.so              R.framework/Resources/base/R/Rcpp/libs/Rcpp.so
-  - codesign --remove-signature R.framework/Versions/4.0/Resources/bin/exec/R
+  - codesign --remove-signature R.framework/Versions/4.1/Resources/bin/exec/R
   - mv R.framework/Resources/base .
   
   - echo "#!/bin/sh"                              >tmp
