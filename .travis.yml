@@ -40,7 +40,8 @@ script:
   - echo export R_INCLUDE_DIR=\$R_HOME/include    >>tmp
   - echo export R_DOC_DIR=\$R_HOME/doc            >>tmp
   - tail -n +41 R.framework/Versions/Current/Resources/bin/R >>tmp
-  - cat tmp >R.framework/Versions/Current/Resources/bin/R
+  - sed "s|^R_binary=.*$|R_binary=\"\$R_HOME/../../../../../MacOS/R\"|g" tmp >R.framework/Versions/Current/Resources/bin/R
+  #- cat tmp >R.framework/Versions/Current/Resources/bin/R
   - rm tmp
   
   - mkdir -p artifacts
