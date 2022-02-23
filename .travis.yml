@@ -8,8 +8,8 @@ env:
 
 install:
   - echo insecure >> ~/.curlrc
-  - curl -V
-  - HOMEBREW_FORCE_BREWED_CURL=1 brew install marcelomazza/homebrew-curl-libssh2/curl
+  - git config --global http.sslVerify false
+  - brew install marcelomazza/homebrew-curl-libssh2/curl
 
   - curl -o R.pkg https://cran.r-project.org/bin/macosx/base/R-$R_VERSION.pkg
   - sudo installer -pkg R.pkg -target /
