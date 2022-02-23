@@ -7,7 +7,7 @@ env:
   CRAN_MIRROR: https://cran.microsoft.com/snapshot/2022-01-01
 
 install:
-
+  - echo insecure >> ~/.curlrc
   - brew install marcelomazza/homebrew-curl-libssh2/curl
 
   - curl -o R.pkg https://cran.r-project.org/bin/macosx/base/R-$R_VERSION.pkg
