@@ -35,3 +35,14 @@ jobs:
         mkdir -p R.framework/Resources/base
         mkdir -p R.framework/Resources/base/R
         /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('R6', 'RColorBrewer', 'base64enc', 'brio', 'cpp11', 'curl', 'farver', 'fastmap', 'magrittr', 'praise', 'rprojroot', 'rstudioapi', 'utf8', 'viridisLite', 'yaml', 'Rcpp', 'colorspace', 'crayon', 'digest', 'evaluate', 'fansi', 'glue', 'gtable', 'isoband', 'jsonlite', 'labeling', 'pkgconfig', 'ps', 'remotes', 'rlang', 'stringi', 'systemfonts', 'withr', 'xfun', 'RInside', 'RProtoBuf', 'cli', 'desc', 'diffobj', 'ellipsis', 'highr', 'htmltools', 'lifecycle', 'munsell', 'processx', 'stringr', 'textshaping', 'tinytex', 'callr', 'jquerylib', 'knitr', 'pkgload', 'ragg', 'scales', 'vctrs', 'pillar', 'rmarkdown', 'tibble', 'ggplot2', 'rematch2', 'waldo', 'testthat'), repos='$REPO_URL', lib='R.framework/Resources/base/R')"
+
+    - name: Patch R
+      run: |
+        python3 patch-framework.py
+        install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/4.1/Resources/lib/libR.dylib      @executable_path/../../lib/libR.dylib      R.framework/Versions/4.1/Resources/bin/exec/R
+        install_name_tool -change @executable_path/../Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.dylib  @executable_path/../../lib/libRblas.dylib  R.framework/Versions/4.1/Resources/bin/exec/R
+        install_name_tool -id @executable_path/../Resources/modules/base/R/RInside/lib/libRInside.dylib   R.framework/Resources/base/R/RInside/lib/libRInside.dylib
+        install_name_tool -id @executable_path/../Resources/modules/base/R/RInside/libs/RInside.so        R.framework/Resources/base/R/RInside/libs/RInside.so
+        install_name_tool -id @executable_path/../Resources/modules/base/R/Rcpp/libs/Rcpp.so              R.framework/Resources/base/R/Rcpp/libs/Rcpp.so
+        codesign --remove-signature R.framework/Versions/4.1/Resources/bin/exec/R
+        mv R.framework/Resources/base .
