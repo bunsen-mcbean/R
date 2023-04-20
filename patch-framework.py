@@ -21,7 +21,7 @@ def locate_libs(path):
 	
 			locations.add(path)
 			
-			output = check_output(["otool", "-L", path])
+			output = check_output(["otool", "-L", path]).decode('utf-8')
 	
 			lines = output.split("\n")
 			lines.pop(0)
@@ -66,7 +66,7 @@ def extract_lib_dependencies(libs):
 	
 		print(lib)
 
-		output = check_output(["otool", "-L", lib])
+		output = check_output(["otool", "-L", lib]).decode('utf-8')
 	
 		lines = output.split("\n")
 		lines.pop(0)
