@@ -29,6 +29,14 @@ jobs:
         ditto /Library/Frameworks/R.framework R.framework
         rm -f R.framework/Versions/4.1/Resources/fontconfig/fonts/conf.d/*
         cp /Library/Frameworks/R.framework/Versions/4.1/Resources/fontconfig/fonts/conf.d/* R.framework/Versions/4.1/Resources/fontconfig/fonts/conf.d/
+
+    - name: Install R deps
+      run: |
+        sudo R --quiet -e "
+          source('https://raw.githubusercontent.com/jonathon-love/R-mac-web/master/cran/bin/install.R')
+          install.libs(c('fribidi', 'gsl', 'udunits', 'gdal', 'openssl', 'geos', 'protobuf'), os='darwin17')
+        "
+        sudo rsync -av --no-perms --no-owner --no-group /tmp/usr/local/ /usr/local
       
     - name: Install base
       run: |
