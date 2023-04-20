@@ -21,7 +21,7 @@ jobs:
     
     - name: Install R
       run: |
-        curl -o R.pkg https://cran.r-project.org/bin/macosx/base/R-$R_VERSION.pkg
+        curl -o R.pkg https://cran.r-project.org/bin/macosx/base/R-${{ env.R_VERSION }}.pkg
         sudo installer -pkg R.pkg -target /
     
     - name: Copy and set up R
@@ -34,7 +34,7 @@ jobs:
       run: |
         mkdir -p R.framework/Resources/base
         mkdir -p R.framework/Resources/base/R
-        /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('R6', 'RColorBrewer', 'base64enc', 'brio', 'cpp11', 'curl', 'farver', 'fastmap', 'magrittr', 'praise', 'rprojroot', 'rstudioapi', 'utf8', 'viridisLite', 'yaml', 'Rcpp', 'colorspace', 'crayon', 'digest', 'evaluate', 'fansi', 'glue', 'gtable', 'isoband', 'jsonlite', 'labeling', 'pkgconfig', 'ps', 'remotes', 'rlang', 'stringi', 'systemfonts', 'withr', 'xfun', 'RInside', 'RProtoBuf', 'cli', 'desc', 'diffobj', 'ellipsis', 'highr', 'htmltools', 'lifecycle', 'munsell', 'processx', 'stringr', 'textshaping', 'tinytex', 'callr', 'jquerylib', 'knitr', 'pkgload', 'ragg', 'scales', 'vctrs', 'pillar', 'rmarkdown', 'tibble', 'ggplot2', 'rematch2', 'waldo', 'testthat'), repos='$REPO_URL', lib='R.framework/Resources/base/R')"
+        /Library/Frameworks/R.framework/Resources/bin/R -e "install.packages(c('R6', 'RColorBrewer', 'base64enc', 'brio', 'cpp11', 'curl', 'farver', 'fastmap', 'magrittr', 'praise', 'rprojroot', 'rstudioapi', 'utf8', 'viridisLite', 'yaml', 'Rcpp', 'colorspace', 'crayon', 'digest', 'evaluate', 'fansi', 'glue', 'gtable', 'isoband', 'jsonlite', 'labeling', 'pkgconfig', 'ps', 'remotes', 'rlang', 'stringi', 'systemfonts', 'withr', 'xfun', 'RInside', 'RProtoBuf', 'cli', 'desc', 'diffobj', 'ellipsis', 'highr', 'htmltools', 'lifecycle', 'munsell', 'processx', 'stringr', 'textshaping', 'tinytex', 'callr', 'jquerylib', 'knitr', 'pkgload', 'ragg', 'scales', 'vctrs', 'pillar', 'rmarkdown', 'tibble', 'ggplot2', 'rematch2', 'waldo', 'testthat'), repos='${{ env.REPO_URL }}', lib='R.framework/Resources/base/R')"
 
     - name: Patch R
       run: |
@@ -63,9 +63,8 @@ jobs:
     
     - name: Compress artifacts
       run: |
-        tar -cjf R.framework-$R_VERSION.tar.bz2  R.framework
-        tar -cjf base-$R_VERSION.tar.bz2         base
-        ls
+        tar -cjf R.framework-${{ env.R_VERSION }}.tar.bz2  R.framework
+        tar -cjf base-${{ env.R_VERSION }}.tar.bz2         base
 
     - name: Install SSH key
       uses: shimataro/ssh-key-action@v2
@@ -76,7 +75,7 @@ jobs:
     
     - name: Upload
       run: |
-        scp ./R.framework-$R_VERSION.tar.bz2 repo:$UPLOADS_DIR/
-        scp ./base-$R_VERSION.tar.bz2 repo:$UPLOADS_DIR/
+        scp ./R.framework-${{ env.R_VERSION }}.tar.bz2 repo:${{ secrets.UPLOADS_DIR }}/
+        scp ./base-${{ env.R_VERSION }}.tar.bz2 repo:${{ secrets.UPLOADS_DIR }}/
         
         
