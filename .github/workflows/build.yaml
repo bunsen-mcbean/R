@@ -60,5 +60,22 @@ jobs:
         sed "s|^R_binary=.*$|R_binary=\"\$R_HOME/../../../../../MacOS/R\"|g" tmp >R.framework/Versions/Current/Resources/bin/R
         cat tmp >R.framework/Versions/Current/Resources/bin/R
         rm tmp
+    
+    - name: Compress artifacts
+      run:
+        tar -cjf R.framework-$R_VERSION.tar.bz2  R.framework
+        tar -cjf base-$R_VERSION.tar.bz2         base
+
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        known_hosts: ${{ secrets.KNOWN_HOSTS }}
+        config: ${{ secrets.SSH_CONFIG }}
+    
+    - name: Upload
+      run: |
+        scp R.framework-$R_VERSION.tar.bz2 repo:$UPLOADS_DIR/
+        scp base-$R_VERSION.tar.bz2 repo:$UPLOADS_DIR/
         
         
