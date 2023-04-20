@@ -62,7 +62,7 @@ jobs:
         rm tmp
     
     - name: Compress artifacts
-      run:
+      run: |
         tar -cjf R.framework-$R_VERSION.tar.bz2  R.framework
         tar -cjf base-$R_VERSION.tar.bz2         base
 
