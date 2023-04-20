@@ -65,6 +65,7 @@ jobs:
       run: |
         tar -cjf R.framework-$R_VERSION.tar.bz2  R.framework
         tar -cjf base-$R_VERSION.tar.bz2         base
+        ls
 
     - name: Install SSH key
       uses: shimataro/ssh-key-action@v2
@@ -75,7 +76,7 @@ jobs:
     
     - name: Upload
       run: |
-        scp R.framework-$R_VERSION.tar.bz2 repo:$UPLOADS_DIR/
-        scp base-$R_VERSION.tar.bz2 repo:$UPLOADS_DIR/
+        scp ./R.framework-$R_VERSION.tar.bz2 repo:$UPLOADS_DIR/
+        scp ./base-$R_VERSION.tar.bz2 repo:$UPLOADS_DIR/
         
         
