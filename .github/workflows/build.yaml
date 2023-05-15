@@ -23,6 +23,7 @@ jobs:
       run: |
         curl -o R.pkg https://cran.r-project.org/bin/macosx/base/R-${{ env.R_VERSION }}.pkg
         sudo installer -pkg R.pkg -target /
+        brew install --cask xquartz
     
     - name: Copy and set up R
       run: |
