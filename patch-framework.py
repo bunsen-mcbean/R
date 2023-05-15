@@ -121,6 +121,7 @@ libs.append(os.path.join(wd, "R.framework/Versions/4.1/Resources/bin/exec/R"))
 
 dependencies = extract_lib_dependencies(libs)
 dependencies.append('/usr/local/opt/openjpeg/lib/libopenjp2.7.dylib')  # sf package needs this
+dependencies.append('/opt/X11/lib/libXrender.1.dylib')  # gdtools package needs this
 
 new_libs = [ ]
 changes = [ ]
